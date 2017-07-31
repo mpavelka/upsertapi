@@ -74,8 +74,23 @@ class Upsertor(object):
 	def UnsetScalar(self, obj_field):
 		self.mod_Unset[obj_field] = ""
 
-	def PullItem(self):
-		pass
+	def PushItem(self, field_name, value):
+		if self.mod_Push.get(field_name) is None:
+			self.mod_Push[field_name] = []
+
+		self.mod_Push[field_name].append(value)
+
+	def PullItem(self, field_name, value):
+		if self.mod_Pull.get(field_name) is None:
+			self.mod_Pull[field_name] = {'$or' : []}
+
+		self.mod_Pull[field_name]['$or'].append(value)
+
+	def Inc(self, field_name, amount=1):
+		self.mod_Inc[field_name]=amount
+
+	def Inc(self, field_name, amount=1):
+		self.mod_Inc[field_name]=amount
 
 	def Execute(self):
 		addobj = {}
